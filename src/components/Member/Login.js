@@ -71,14 +71,15 @@ class Login extends React.Component {
                         };
                         localStorage["appState"] = JSON.stringify(appState);
                         this.setState({
-                            isLoggedIn: appState.isLoggedIn,
+                            isLoggedIn: true,
                         });
-                        
+                        // console.log(JSON.parse(localStorage["appState"]).isLoggedIn)
                         this.context.loginContext(true)
+                        // this.context.addCart(20)
                         
                         Notifications('Login successfully!', 'success')
                     }else{
-                        Notifications('Email or Password not correct!', 'danger')
+                        Notifications('Email or Password incorrect!', 'danger')
                     }
                 })
                 .catch(error => {
@@ -93,9 +94,13 @@ class Login extends React.Component {
         }
         return (
             <AppConsumer>
-            {({value}) => (
+            {({numberCart,addCart}) => (
+                
                 <section class="mtb-2">
                     <div className="container">
+                        <p>Cart item: {numberCart}</p>
+                        <a className="btn btn-default" onClick={ () => addCart(8) }>Increase</a>
+                    
                         <div className="row">
                             <div className="col-sm-12">
                             <div className="login-form">

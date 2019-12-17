@@ -6,25 +6,29 @@ export class AppProvider extends React.Component {
     constructor(props){
       super(props)
       this.state = {
-        numberCart: []
+        numberCart: 0
       }
     }
 
     logoutContext = (value) => {
-        // localStorage['isLoggedIn'] = '';
         localStorage.clear();
-        console.log("logout:" + value)
     }
     loginContext = (value) => {
-        console.log("login:" + value) 
         localStorage['isLoggedIn'] = JSON.stringify(value)
     }
-
+    addCart = (value) => {
+      this.setState({
+        numberCart: value
+      })
+      // console.log(value)
+    }
     render() {
       return (
         <AppContext.Provider value={{
+              numberCart: this.state.numberCart,
+              addCart:this.addCart,
               loginContext: this.loginContext,
-              logoutContext: this.logoutContext
+              logoutContext: this.logoutContext,
           }}
         >
           {this.props.children}

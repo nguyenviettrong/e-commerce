@@ -18,17 +18,21 @@ class HeaderMiddle extends React.Component {
     }
 
     renderLoginLogout () {
-        // console.log("type: " + typeof(localStorage['isLoggedIn']) + "  Variable: " + localStorage['isLoggedIn'])
-        return (
-            <React.Fragment>
-                <a onClick={this.handlelogOut}><i className="fa fa-lock" /> Logout</a>
-                <Link to="/login"><i className="fa fa-lock" /> Login </Link>
-            </React.Fragment>    
-        )
+        if(localStorage["appState"] !== undefined){
+            const isLoggedIn = JSON.parse(localStorage["appState"]).isLoggedIn
+            if(isLoggedIn){
+                return <li>
+                    <a onClick={this.handlelogOut}><i className="fa fa-lock" /> Logout</a>
+                    <Link to="/account"><i className="fa fa-lock" /> Account </Link>
+                </li>
+            }
+        }else{
+            return <li><Link to="/login"><i className="fa fa-lock" /> Login </Link></li>
+        }
     }
 
     render() {
-        console.log("header middle")
+        // console.log("header middle")
         return (
             <div className="header-middle">
                 <div className="container">
@@ -74,12 +78,16 @@ class HeaderMiddle extends React.Component {
                             </li>
                             
                             <li><Link to="/cart"><i className="fa fa-lock" /> Cart </Link></li>
-                            <li>
-                                {this.renderLoginLogout()}
-                            </li>
-                            <li>
-                                <Link to="/account"><i className="fa fa-lock" /> Account </Link>
-                            </li>
+                            
+                            {this.renderLoginLogout()}
+                            
+                            {/* <AppConsumer>
+                                {({numberCart}) => (
+                                    <li>
+                                        Cart item: {numberCart}
+                                    </li>
+                                )}
+                            </AppConsumer> */}
                         </ul>
                         </div>
                     </div>

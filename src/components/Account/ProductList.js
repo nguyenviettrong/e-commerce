@@ -43,9 +43,12 @@ class ProductList extends React.Component {
             'Content-Type': 'application/x-www-form-urlencoded',
             'Accept': 'application/json'
         };
-        CallApi('POST','user/delete-product/' + e.target.id, '',headers)
+        CallApi('GET','user/delete-product/' + e.target.id, '',headers)
         .then(response => {
             console.log(response)
+            // this.setState({
+            //     dataProducts:response.data.data
+            // })
         })
         .catch(error => {
             console.log(error)
@@ -53,6 +56,7 @@ class ProductList extends React.Component {
     }
 
     render() {
+        // console.log(this.state.dataProducts)
         let itemProduct = null
         if(this.state.dataProducts && Array.isArray(this.state.dataProducts)) {
             itemProduct = this.state.dataProducts.map((item,index) => 

@@ -9,3 +9,4 @@ export default function CallApi (method, endpoint, data, headers=null) {
         })
     )
 }
+// http://localhost:8080/laravel-api/laravel/public/api/
