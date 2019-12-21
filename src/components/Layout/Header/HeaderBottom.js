@@ -45,9 +45,7 @@ class HeaderBottom extends React.Component {
                             <li>
                                 <Link to="/contact">Contact </Link>
                             </li>
-                            <li>
-                                <Link to="/addproduct">Add product </Link>
-                            </li>
+                            
                             </ul>
                         </div>
                         </div>

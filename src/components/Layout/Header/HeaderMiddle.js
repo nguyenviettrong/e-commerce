@@ -4,14 +4,14 @@ import {
     withRouter
 } from "react-router-dom";
 import { AppContext } from '../../AppContext'
-import { AppConsumer } from '../../AppContext'
+// import { AppConsumer } from '../../AppContext'
 
 class HeaderMiddle extends React.Component {
     static contextType = AppContext
-    constructor(props) {
-        super(props)
+    // constructor(props) {
+    //     super(props)
         
-    }
+    // }
 
     handlelogOut = () => {
        this.context.logoutContext()
@@ -21,10 +21,13 @@ class HeaderMiddle extends React.Component {
         if(localStorage["appState"] !== undefined){
             const isLoggedIn = JSON.parse(localStorage["appState"]).isLoggedIn
             if(isLoggedIn){
-                return <li>
-                    <a onClick={this.handlelogOut}><i className="fa fa-lock" /> Logout</a>
-                    <Link to="/account"><i className="fa fa-lock" /> Account </Link>
-                </li>
+                return (
+                <React.Fragment>
+                <li><a onClick={this.handlelogOut}><i className="fa fa-lock" /> Logout</a></li>
+                <li><Link to="/account"><i className="fa fa-lock" /> Account </Link></li>
+                <li><a href="/wishlist"><i className="fa fa-star" /> Wishlist</a></li>
+                </React.Fragment>
+                )
             }
         }else{
             return <li><Link to="/login"><i className="fa fa-lock" /> Login </Link></li>
@@ -39,7 +42,7 @@ class HeaderMiddle extends React.Component {
                     <div className="row">
                     <div className="col-md-4 clearfix">
                         <div className="logo pull-left">
-                        <a href="index.html"><img src="images/home/logo.png" alt="" /></a>
+                        <a href="true"><img src="images/home/logo.png" alt="" /></a>
                         </div>
                         <div className="btn-group pull-right clearfix">
                         <div className="btn-group">
@@ -70,9 +73,7 @@ class HeaderMiddle extends React.Component {
                             <li>
                                 <Link to="/register"><i className="fa fa-lock"></i> Register </Link>
                             </li>
-                            <li>
-                                <a href="true"><i className="fa fa-star" /> Wishlist</a>
-                            </li>
+                            
                             <li>
                                 <Link to="/checkout"><i className="fa fa-lock" /> Checkout </Link>
                             </li>

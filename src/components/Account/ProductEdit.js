@@ -1,22 +1,16 @@
 import React from 'react';
 import CallApi from '../Config/API';
+import ImageDirectory from '../Config/ImageDirectory'
 import Errors from '../Errors/Errors';
 import Notifications from '../Notifications/Notifications';
 import {
     Redirect
 } from "react-router-dom";
 
-class ProductAdd extends React.Component {
+class ProductEdit extends React.Component {
 
     constructor(props){
         super(props)
-        const token = localStorage.getItem('appState');
-        let isLoggedIn = false
-        if(token == null){
-            isLoggedIn = false
-        }else{
-            isLoggedIn = true
-        }
         this.state = {
             all_category:'',
             all_brand:'',
@@ -31,10 +25,11 @@ class ProductAdd extends React.Component {
             detail:'',
             company:'',
             highlight:false,
-            image:[],
+            file: [],
             active: false,
             errors: '',
-            isLoggedIn: isLoggedIn
+            dataEdit: [],
+            imageSumary: '',
         }
     }
     
@@ -44,6 +39,37 @@ class ProductAdd extends React.Component {
             this.setState({
                 all_category: response.data.category,
                 all_brand: response.data.brand,
+            })
+        })
+        .catch(error => {
+            console.log(error)
+        })
+        // ============================
+        CallApi('GET','product/detail/' + this.props.match.params.id, '')
+        .then(response => {
+            console.log(response)
+            const dataEdit = response.data.data
+            var imageSumary = [];
+            for (var i = 0; i < JSON.parse(dataEdit.image).length; ++i){
+                imageSumary.push({
+                    name: JSON.parse(dataEdit.image)[i],
+                    checked: false
+                });
+            }
+            this.setState({
+                category: dataEdit.id_category,
+                brand: dataEdit.id_brand,
+                name: dataEdit.name,
+                web_id: dataEdit.web_id,
+                status: dataEdit.status,
+                price: dataEdit.price,
+                sale:dataEdit.sale,
+                condition: dataEdit.condition,
+                detail: dataEdit.detail,
+                company: dataEdit.company_profile,
+                highlight: dataEdit.highlight == 0 ? false : true,
+                imageSumary: imageSumary,
+                active: dataEdit.active == 0 ? false : true,
             })
         })
         .catch(error => {
@@ -85,7 +111,7 @@ class ProductAdd extends React.Component {
                 image.push(file);
             })
             this.setState({
-                image: image
+                file: image
             });
         }
 
@@ -99,12 +125,21 @@ class ProductAdd extends React.Component {
             active: !this.state.active,
         });
     }
+
     toggleChangeHighlight = (e) => {
         this.setState({
             highlight: !this.state.highlight,
         });
     }
     
+    handleRemoveimage = ({event,index}) => {
+        let newItems = this.state.imageSumary.slice();
+		newItems[index].checked = !newItems[index].checked
+        this.setState({
+            imageSumary: newItems
+        })
+    }
+
     handleSubmit = (e) => {
         e.preventDefault();
         let err = [];
@@ -118,8 +153,8 @@ class ProductAdd extends React.Component {
         if(this.state.sale === ''){
             err.push("Please enter your sale!")
         }
-        if(!this.state.image.length > 0){
-            err.push("Please enter choose image!")
+        if(!this.state.file.length > 0 && !this.state.imageSumary.length > 0){
+            err.push("Please choose less than 1 image!")
         }
        
         if (err.length >0) {
@@ -127,6 +162,7 @@ class ProductAdd extends React.Component {
                 errors: err
             })
         } else {
+            
             this.setState({
                 errors: ''
             });
@@ -150,18 +186,28 @@ class ProductAdd extends React.Component {
                 formData.append('sale', this.state.sale);
                 formData.append('condition', this.state.condition);
                 formData.append('detail', this.state.detail);
-                formData.append('company', this.state.company);
-                formData.append('highlight', this.state.highlight ? 1 : 0);
-                formData.append('active', this.state.active ? 1 : 0);
-                this.state.image.map((item,index) => {
+                formData.append('company_profile', this.state.company);
+                formData.append('highlight', this.state.highlight === true ? 1 : 0);
+                formData.append('active', this.state.active === true ? 1 : 0);
+                this.state.file.map((item,index) => {
                     formData.append('file[]', item);
                 })
-
-                CallApi('POST','user/add-product', formData, headers)
+                this.state.imageSumary.map((item,index) => {
+                    if (item.checked) {
+                        formData.append('avatarCheckBox[]', item.name);
+                    }
+                })
+                this.state.imageSumary.map((item,index) => {
+                    if (item.checked) {
+                        console.log(item.name)
+                    }
+                })
+                
+                CallApi('POST','user/edit-product/'+ this.props.match.params.id, formData, headers)
                 .then(response => {
                     // console.log(response)
                     if(response.data.response == 'success'){
-                        Notifications("Add product successfully!","success")
+                        Notifications("Update product successfully!","success")
                     }
                 })
                 .catch(error => {
@@ -171,15 +217,30 @@ class ProductAdd extends React.Component {
         }
     }
 
+    renderImage = () => {
+        if(this.state.imageSumary) {
+            if (Array.isArray(this.state.imageSumary)) {
+                return this.state.imageSumary.map((item,index) => 
+                    <div className="col-md-2 col-sm-2 col-3" key={index}>
+                        <img src={ImageDirectory("user/product/2/" + item.name)} alt="" className="w-100"/>
+                        <input type="checkbox" onChange={ (event) => this.handleRemoveimage({event,index})} />
+                        <span>Remove?</span>
+                    </div>
+                )
+            }
+        }
+    }
+
     render() {
-        
-        if(!this.state.isLoggedIn){
-            return <Redirect to="/login"></Redirect>
+        // console.log(this.state.imageSumary)
+        // console.log(this.state.file)
+        if(this.props.match.params.id === undefined){
+            return <Redirect to="/account"></Redirect>
         }
         return (
             <section className="mtb-2">
                 <div className="signup-form">
-                    <h2>Add product!</h2>
+                    <h2>Edit product {this.state.name}</h2>
                     <Errors error={this.state.errors}/>
                     <form action="#" onSubmit={this.handleSubmit}>
 
@@ -206,7 +267,9 @@ class ProductAdd extends React.Component {
                     <input type="text" name="condition" placeholder="Condition" value={this.state.condition} onChange={this.handleChange} />
                     <input type="text" name="detail" placeholder="Detail" value={this.state.detail} onChange={this.handleChange} />
                     <input type="text" name="company" placeholder="Company" value={this.state.company} onChange={this.handleChange} />
-
+                    <div className="row">
+                        {this.renderImage()}
+                    </div>
                     <input type="file" name="image[]" multiple onChange={this.handleUpload}/>
                     <div>
                         <label className="d-flex">
@@ -229,7 +292,7 @@ class ProductAdd extends React.Component {
                             <span>Active product?</span>
                         </label>
                     </div>
-                    <button type="submit" className="btn btn-default">Add product</button>
+                    <button type="submit" className="btn btn-default">Update product</button>
                     
                     </form>
                 </div>
@@ -237,4 +300,4 @@ class ProductAdd extends React.Component {
         );
     }
 }
-export default ProductAdd;
+export default ProductEdit;

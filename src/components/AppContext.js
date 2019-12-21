@@ -1,8 +1,9 @@
 import React from 'react'
+import { withRouter} from 'react-router-dom';
 export const AppContext = React.createContext()
 export const AppConsumer = AppContext.Consumer
 
-export class AppProvider extends React.Component {
+class AppProvider extends React.Component {
     constructor(props){
       super(props)
       this.state = {
@@ -12,6 +13,7 @@ export class AppProvider extends React.Component {
 
     logoutContext = (value) => {
         localStorage.clear();
+        this.props.history.push('/')
     }
     loginContext = (value) => {
         localStorage['isLoggedIn'] = JSON.stringify(value)
@@ -36,3 +38,4 @@ export class AppProvider extends React.Component {
       );
     }
   }
+  export default withRouter(AppProvider);

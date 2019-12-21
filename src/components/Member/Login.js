@@ -98,8 +98,8 @@ class Login extends React.Component {
                 
                 <section class="mtb-2">
                     <div className="container">
-                        <p>Cart item: {numberCart}</p>
-                        <a className="btn btn-default" onClick={ () => addCart(8) }>Increase</a>
+                        {/* <p>Cart item: {numberCart}</p>
+                        <a className="btn btn-default" onClick={ () => addCart(8) }>Increase</a> */}
                     
                         <div className="row">
                             <div className="col-sm-12">

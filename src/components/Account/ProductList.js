@@ -35,6 +35,7 @@ class ProductList extends React.Component {
     }
 
     handleDelete = (e) => {
+        e.preventDefault();
         const token = localStorage.getItem('appState');
         const userData = JSON.parse(token).user;
         let accessToken = userData.auth_token;
@@ -45,10 +46,10 @@ class ProductList extends React.Component {
         };
         CallApi('GET','user/delete-product/' + e.target.id, '',headers)
         .then(response => {
-            console.log(response)
-            // this.setState({
-            //     dataProducts:response.data.data
-            // })
+            // console.log(response)
+            this.setState({
+                dataProducts:response.data.data
+            })
         })
         .catch(error => {
             console.log(error)
@@ -62,19 +63,19 @@ class ProductList extends React.Component {
             itemProduct = this.state.dataProducts.map((item,index) => 
                 <tr key={index}>
                     <td className="cart_product">
-                        <a href><img src="images/cart/one.png" alt="" /></a>
+                        <a href="true"><img src="images/cart/one.png" alt="" /></a>
                     </td>
                     <td className="cart_description">
-                        <h4><a href>{item.name}</a></h4>
+                        <h4><a href="true">{item.name}</a></h4>
                     </td>
                     <td className="cart_price">
                         <p>{item.price}</p>
                     </td>
                     <td className="cart_quantity">
-                        <Link to="/account/add" id={item.id} onClick={this.handleEdit}>Edit</Link>
+                        <Link to={"/account/edit/" + item.id} id={item.id} onClick={this.handleEdit}>Edit</Link>
                     </td>
                     <td className="cart_delete">
-                        <a id={item.id} className="cart_quantity_delete" href onClick={this.handleDelete}>Delete</a>
+                        <a id={item.id} className="cart_quantity_delete" href="true" onClick={this.handleDelete}>Delete</a>
                     </td>
                 </tr>
             )

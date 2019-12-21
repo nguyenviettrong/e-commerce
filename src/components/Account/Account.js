@@ -1,46 +1,40 @@
 import React from 'react';
 import {
-    BrowserRouter as Router,
+    // BrowserRouter as Router,
     Switch,
     Route,
-    Link
+    Redirect,
+    // Link
 } from "react-router-dom";
 import ProductAdd from './ProductAdd';
+import ProductEdit from './ProductEdit';
 import Profile from './Profile';
 import ProductList from './ProductList';
+import Navbar from './Navbar';
 
 // import ImageDirectory from '../Config/ImageDirectory';
 
 class Account extends React.Component {
 
     render() {
+        if(localStorage["appState"] !== undefined){
+            const isLoggedIn = JSON.parse(localStorage["appState"]).isLoggedIn
+            if(!isLoggedIn){
+                return <Redirect to="/login"></Redirect>
+            }
+        }
         return (
             <div>
                 <div className="container">
                     <div className="row">
                         <div className="col-sm-3">
-                            <div className="panel-group category-products" id="accordian">
-                                <div className="panel panel-default">                                
-                                    <div className="panel-body">
-                                        <ul>
-                                            <li>
-                                                <Link to="/account/profile"><i className="fa fa-angle-right"></i> My profile </Link>
-                                            </li>
-                                            <li>
-                                                <Link to="/account"><i className="fa fa-angle-right"></i> All product</Link>
-                                            </li>
-                                            <li>
-                                                <Link to="/account/add"><i className="fa fa-angle-right"></i> Add new product</Link>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
+                            <Navbar />
                         </div>
-                        <div id="cart_items" className="col-sm-9 ">
+                        <div id="cart_items" className="col-sm-9">
                             <Switch>
                                 <Route exact path='/account' component={ProductList}/>
                                 <Route path='/account/add' component={ProductAdd}/>
+                                <Route path='/account/edit/:id?' component={ProductEdit}/>
                                 <Route path='/account/profile' component={Profile}/>
                             </Switch>
                         </div>
