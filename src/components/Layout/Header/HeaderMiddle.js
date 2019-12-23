@@ -8,10 +8,6 @@ import { AppContext } from '../../AppContext'
 
 class HeaderMiddle extends React.Component {
     static contextType = AppContext
-    // constructor(props) {
-    //     super(props)
-        
-    // }
 
     handlelogOut = () => {
        this.context.logoutContext()
@@ -20,17 +16,25 @@ class HeaderMiddle extends React.Component {
     renderLoginLogout () {
         if(localStorage["appState"] !== undefined){
             const isLoggedIn = JSON.parse(localStorage["appState"]).isLoggedIn
+            const cartNumber = JSON.parse(localStorage["appState"]).cart.length
             if(isLoggedIn){
                 return (
                 <React.Fragment>
-                <li><a onClick={this.handlelogOut}><i className="fa fa-lock" /> Logout</a></li>
-                <li><Link to="/account"><i className="fa fa-lock" /> Account </Link></li>
-                <li><a href="/wishlist"><i className="fa fa-star" /> Wishlist</a></li>
+                    <li><a href="/wishlist"><i className="fa fa-star" /> Wishlist</a></li>
+                    <li><Link to="/checkout"><i className="fa fa-lock" /> Checkout </Link></li>                
+                    <li><Link to="/account"><i className="fa fa-lock" /> Account </Link></li> 
+                    <li><Link to="/cart"><i className="fa fa-lock" /> Cart <span className="badge">{cartNumber}</span></Link></li>                
+                    <li><a onClick={this.handlelogOut}><i className="fa fa-lock" /> Logout</a></li>
                 </React.Fragment>
                 )
             }
         }else{
-            return <li><Link to="/login"><i className="fa fa-lock" /> Login </Link></li>
+            return (
+                <React.Fragment>
+                    <li><Link to="/register"><i className="fa fa-lock"></i> Register </Link></li>
+                    <li><Link to="/login"><i className="fa fa-lock" /> Login </Link></li>
+                </React.Fragment>
+            )
         }
     }
 
@@ -42,7 +46,7 @@ class HeaderMiddle extends React.Component {
                     <div className="row">
                     <div className="col-md-4 clearfix">
                         <div className="logo pull-left">
-                        <a href="true"><img src="images/home/logo.png" alt="" /></a>
+                        <Link to="/"><img src="images/home/logo.png" alt="" /></Link>
                         </div>
                         <div className="btn-group pull-right clearfix">
                         <div className="btn-group">
@@ -70,25 +74,7 @@ class HeaderMiddle extends React.Component {
                     <div className="col-md-8 clearfix">
                         <div className="shop-menu clearfix pull-right">
                         <ul className="nav navbar-nav">
-                            <li>
-                                <Link to="/register"><i className="fa fa-lock"></i> Register </Link>
-                            </li>
-                            
-                            <li>
-                                <Link to="/checkout"><i className="fa fa-lock" /> Checkout </Link>
-                            </li>
-                            
-                            <li><Link to="/cart"><i className="fa fa-lock" /> Cart </Link></li>
-                            
                             {this.renderLoginLogout()}
-                            
-                            {/* <AppConsumer>
-                                {({numberCart}) => (
-                                    <li>
-                                        Cart item: {numberCart}
-                                    </li>
-                                )}
-                            </AppConsumer> */}
                         </ul>
                         </div>
                     </div>

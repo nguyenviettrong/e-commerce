@@ -12,10 +12,9 @@ class Login extends React.Component {
     static contextType = AppContext
     constructor(props){
         super(props)
-        const token = localStorage.getItem('appState');
         let isLoggedIn = false
-        if(token !== null){
-            isLoggedIn = true
+        if(localStorage["appState"] !== undefined){
+            isLoggedIn = JSON.parse(localStorage["appState"]).isLoggedIn
         }
         this.state = {
             email:'',
@@ -67,15 +66,13 @@ class Login extends React.Component {
                         };
                         let appState = {
                             isLoggedIn: true,
-                            user: userData
+                            user: userData,
+                            cart: []
                         };
                         localStorage["appState"] = JSON.stringify(appState);
                         this.setState({
                             isLoggedIn: true,
                         });
-                        // console.log(JSON.parse(localStorage["appState"]).isLoggedIn)
-                        this.context.loginContext(true)
-                        // this.context.addCart(20)
                         
                         Notifications('Login successfully!', 'success')
                     }else{
@@ -96,11 +93,8 @@ class Login extends React.Component {
             <AppConsumer>
             {({numberCart,addCart}) => (
                 
-                <section class="mtb-2">
+                <section className="mtb-2">
                     <div className="container">
-                        {/* <p>Cart item: {numberCart}</p>
-                        <a className="btn btn-default" onClick={ () => addCart(8) }>Increase</a> */}
-                    
                         <div className="row">
                             <div className="col-sm-12">
                             <div className="login-form">
@@ -123,7 +117,6 @@ class Login extends React.Component {
             )}
             </AppConsumer>
         )
-        
     }
 }
 export default Login;

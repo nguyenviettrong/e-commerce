@@ -192,6 +192,7 @@ class ProductEdit extends React.Component {
                 this.state.file.map((item,index) => {
                     formData.append('file[]', item);
                 })
+                console.log(this.state.imageSumary)
                 this.state.imageSumary.map((item,index) => {
                     if (item.checked) {
                         formData.append('avatarCheckBox[]', item.name);

@@ -21,31 +21,18 @@ class HeaderBottom extends React.Component {
                         </div>
                         <div className="mainmenu pull-left">
                             <ul className="nav navbar-nav collapse navbar-collapse">
-                            <li>
-                            <Link to="/"><i className="fa fa-home" /> Home </Link>
-                            </li>
-                            <li className="dropdown">
-                                <a href="/">Shop<i className="fa fa-angle-down" /></a>
-                                <ul role="menu" className="sub-menu">
-                                    <li><Link to="/product">Products</Link></li>
-                                    <li><a href="product-details.html">Product Details</a></li> 
-                                    <li><a href="checkout.html">Checkout</a></li> 
-                                    <li><a href="cart.html">Cart</a></li> 
-                                    <li><a href="/login">Login</a></li> 
-                                </ul>
-                            </li> 
-                            <li className="dropdown">
-                                <Link to="/blog"><i className="fa fa-angle-down" /> Blog </Link>
-                                <ul role="menu" className="sub-menu">
-                                <li><a href="blog.html">Blog List</a></li>
-                                <li><a href="blog-single.html">Blog Single</a></li>
-                                </ul>
-                            </li> 
-                            
-                            <li>
-                                <Link to="/contact">Contact </Link>
-                            </li>
-                            
+                                <li>
+                                <Link to="/"><i className="fa fa-home" /> Home </Link>
+                                </li>
+                                <li className="dropdown">
+                                    <Link to="/"> Shop </Link>
+                                </li> 
+                                <li className="dropdown">
+                                    <Link to="/blog"> Blog </Link>
+                                </li> 
+                                <li>
+                                    <Link to="/contact"> Contact </Link>
+                                </li>                            
                             </ul>
                         </div>
                         </div>
