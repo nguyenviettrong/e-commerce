@@ -67,7 +67,8 @@ class Login extends React.Component {
                         let appState = {
                             isLoggedIn: true,
                             user: userData,
-                            cart: []
+                            cart: [],
+                            wishlist: [],
                         };
                         localStorage["appState"] = JSON.stringify(appState);
                         this.setState({

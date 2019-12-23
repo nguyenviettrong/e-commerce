@@ -13,6 +13,7 @@ import Register from './components/Member/Register';
 import Checkout from './components/Checkout/Checkout';
 import Account from './components/Account/Account';
 import Cart from './components/Cart/CartList';
+import Wishlist from './components/Layout/Wishlist';
 import Contact from './components/Layout/Contact';
 import Blog from './components/Blog/BlogList';
 import SingleBlog from './components/Blog/BlogSingle';
@@ -32,6 +33,7 @@ ReactDOM.render(
                     <Route path="/account" component={Account}/>
                     <Route path="/blog" component={Blog}/>
                     <Route path="/cart" component={Cart}/>
+                    <Route path="/wishlist" component={Wishlist}/>
                     <Route path="/contact" component={Contact}/>
                     <Route path="/singleblog/:slug" component={SingleBlog} />
                     <Route component={NotFound}/>

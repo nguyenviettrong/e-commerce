@@ -6,7 +6,6 @@ import HeaderBottom from './components/Layout/Header/HeaderBottom';
 import Footer from './components/Layout/Footer';
 import ReactNotification from 'react-notifications-component'
 import 'react-notifications-component/dist/theme.css'
-// import { AppContext } from './components/AppContext'
 import AppProvider  from './components/AppContext'
 import {
   withRouter

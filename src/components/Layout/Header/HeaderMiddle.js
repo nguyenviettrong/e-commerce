@@ -1,17 +1,11 @@
 import React from 'react';
 import {
     Link,
-    withRouter
 } from "react-router-dom";
 import { AppContext } from '../../AppContext'
-// import { AppConsumer } from '../../AppContext'
 
 class HeaderMiddle extends React.Component {
     static contextType = AppContext
-
-    handlelogOut = () => {
-       this.context.logoutContext()
-    }
 
     renderLoginLogout () {
         if(localStorage["appState"] !== undefined){
@@ -20,19 +14,19 @@ class HeaderMiddle extends React.Component {
             if(isLoggedIn){
                 return (
                 <React.Fragment>
-                    <li><a href="/wishlist"><i className="fa fa-star" /> Wishlist</a></li>
-                    <li><Link to="/checkout"><i className="fa fa-lock" /> Checkout </Link></li>                
-                    <li><Link to="/account"><i className="fa fa-lock" /> Account </Link></li> 
-                    <li><Link to="/cart"><i className="fa fa-lock" /> Cart <span className="badge">{cartNumber}</span></Link></li>                
-                    <li><a onClick={this.handlelogOut}><i className="fa fa-lock" /> Logout</a></li>
+                    <li><Link to="/wishlist"><i className="fa fa-star" /> Wishlist <span className="badge">{this.context.state.wishlist.length}</span></Link></li>
+                    <li><Link to="/checkout"><i className="fa fa-credit-card" /> Checkout </Link></li>                
+                    <li><Link to="/account"><i className="fa fa-user" /> Account </Link></li> 
+                    <li><Link to="/cart"><i className="fa fa-shopping-cart" /> Cart <span className="badge">{cartNumber}</span></Link></li>                
+                    <li><a onClick={ () => this.context.logoutContext() }><i className="fa fa-sign-out" /> Logout</a></li>
                 </React.Fragment>
                 )
             }
         }else{
             return (
                 <React.Fragment>
-                    <li><Link to="/register"><i className="fa fa-lock"></i> Register </Link></li>
-                    <li><Link to="/login"><i className="fa fa-lock" /> Login </Link></li>
+                    <li><Link to="/register"><i className="fa fa-registered"></i> Register </Link></li>
+                    <li><Link to="/login"><i className="fa fa-sign-in" /> Login </Link></li>
                 </React.Fragment>
             )
         }
@@ -84,4 +78,4 @@ class HeaderMiddle extends React.Component {
         );
     }
 }
-export default withRouter(HeaderMiddle);
+export default HeaderMiddle;
