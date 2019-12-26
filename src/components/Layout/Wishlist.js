@@ -17,7 +17,10 @@ class Wishlist extends React.Component {
                                     <img src="images/home/recommend1.jpg" alt="" />
                                     <h2>${item.price}</h2>
                                     <p>{item.name}</p>
-                                    <button type="button" className="btn btn-default add-to-cart"><i className="fa fa-shopping-cart" onClick={ () => this.context.handleAddCart(item)}></i>Add to cart</button>
+                                    <div>
+                                        <button type="button" className="btn btn-default mr-2" onClick={ () => this.context.handleAddCart(item)}><i className="fa fa-shopping-cart"></i> Add to cart</button>
+                                        <a href="#" className="text-danger" onClick={ () => this.context.toggleWishlist(item)}>Remove wishlist</a>
+                                    </div>
                                 </div>
                             </div>
                         </div>

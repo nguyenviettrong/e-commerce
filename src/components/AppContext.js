@@ -103,7 +103,8 @@ class AppProvider extends React.Component {
       }
     }
 
-    handleAddWishlist = (product) => {
+    toggleWishlist = (product) => {
+      // console.log(product.id)
       let {wishlist} = this.state
       let index = -1;
       if (wishlist.length > 0) {
@@ -115,14 +116,15 @@ class AppProvider extends React.Component {
       }
 
       if (index === -1) {
-        product.quantity = 1
+        // product.quantity = 1
         wishlist.push(product)
         this.setState({
           wishlist:wishlist
         })
       }else{
         let objIndex = wishlist.findIndex((obj => obj.id === index))
-        wishlist[objIndex].quantity++
+        // wishlist[objIndex].quantity++
+        wishlist.splice(objIndex, 1);
         this.setState({
           wishlist:wishlist
         })
@@ -133,11 +135,12 @@ class AppProvider extends React.Component {
         appState.wishlist = wishlist
         localStorage["appState"] = JSON.stringify(appState);
       }
-
+      
     }
 
     render() {
       // console.log(this.state.cart)
+      // console.log("App context localstorage: " , JSON.parse(localStorage.getItem('appState')).wishlist)
       return (
         <AppContext.Provider value={{
             state: this.state,
@@ -145,7 +148,7 @@ class AppProvider extends React.Component {
             handleRemoveItemCart: this.handleRemoveItemCart,
             handleIncreaseItemCart: this.handleIncreaseItemCart,
             handleDecreaseItemCart: this.handleDecreaseItemCart,
-            handleAddWishlist:this.handleAddWishlist,
+            toggleWishlist:this.toggleWishlist,
             loginContext: this.loginContext,
             logoutContext: this.logoutContext,
           }}

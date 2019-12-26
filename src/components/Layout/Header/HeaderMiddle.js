@@ -11,10 +11,11 @@ class HeaderMiddle extends React.Component {
         if(localStorage["appState"] !== undefined){
             const isLoggedIn = JSON.parse(localStorage["appState"]).isLoggedIn
             const cartNumber = JSON.parse(localStorage["appState"]).cart.length
+            const wishlistNumber = JSON.parse(localStorage["appState"]).wishlist.length
             if(isLoggedIn){
                 return (
                 <React.Fragment>
-                    <li><Link to="/wishlist"><i className="fa fa-star" /> Wishlist <span className="badge">{this.context.state.wishlist.length}</span></Link></li>
+                    <li><Link to="/wishlist"><i className="fa fa-star" /> Wishlist <span className="badge">{wishlistNumber}</span></Link></li>
                     <li><Link to="/checkout"><i className="fa fa-credit-card" /> Checkout </Link></li>                
                     <li><Link to="/account"><i className="fa fa-user" /> Account </Link></li> 
                     <li><Link to="/cart"><i className="fa fa-shopping-cart" /> Cart <span className="badge">{cartNumber}</span></Link></li>                

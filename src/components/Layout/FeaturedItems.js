@@ -1,8 +1,8 @@
 import React from 'react';
 import CallApi from '././../Config/API';
 import ImageDirectory from '././../Config/ImageDirectory';
-
 import { AppContext } from '../AppContext'
+
 class FeaturedItems extends React.Component {
     static contextType = AppContext
     constructor(props){
@@ -24,34 +24,45 @@ class FeaturedItems extends React.Component {
         })
     }
 
-    render() {        
-        let itemProduct = null
+    render() {
+        let wishlistId = []       
+        if(localStorage["appState"] !== undefined){
+          if(JSON.parse(localStorage.getItem('appState')).wishlist.length > 0) {            
+            JSON.parse(localStorage.getItem('appState')).wishlist.map((wishlistitem,index) => {
+              wishlistId.push(wishlistitem.id)
+            })
+          }  
+        }
+        let itemProduct = null        
         if(this.state.dataProducts && Array.isArray(this.state.dataProducts)) {
-            itemProduct = this.state.dataProducts.map((item,index) =>           
-                <div className="col-sm-4" key={index}>
-                  <div className="product-image-wrapper">
-                    <div className="single-products">
-                      <div className="productinfo text-center">
-                        <img src={ImageDirectory("user/product/2/" + JSON.parse(item.image) )} alt="" />
-                        <h2>${item.price}</h2>
-                        <p>{item.name}</p>
-                      </div>
-                      <div className="product-overlay">
-                        <div className="overlay-content">
+            return itemProduct = this.state.dataProducts.map((item,index) =>  {         
+                return (
+                  <div className="col-sm-4" key={index}>
+                    <div className="product-image-wrapper">
+                      <div className="single-products">
+                        <div className="productinfo text-center">
+                          <img src={ImageDirectory("user/product/2/" + JSON.parse(item.image) )} alt="" />
                           <h2>${item.price}</h2>
                           <p>{item.name}</p>
-                          <a className="btn btn-default add-to-cart" onClick={ () => this.context.handleAddCart(item)}><i className="fa fa-shopping-cart" />Add to cart</a>
+                        </div>
+                        <div className="product-overlay">
+                          <div className="overlay-content">
+                            <h2>${item.price}</h2>
+                            <p>{item.name}</p>
+                            <a className="btn btn-default add-to-cart" onClick={ () => this.context.handleAddCart(item)}><i className="fa fa-shopping-cart" />Add to cart</a>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                    <div className="choose">
-                      <ul className="nav nav-pills nav-justified">
-                        <li><a><i className="fa fa-plus-square" onClick={ () => this.context.handleAddWishlist(item)}/>Add to wishlist</a></li>
-                        <li><a><i className="fa fa-plus-square" />Add to compare</a></li>
-                      </ul>
+                      <div className="choose">
+                        <ul className="nav nav-pills nav-justified">                          
+                          <li key={index}><a onClick={ () => this.context.toggleWishlist(item)}><i className={ (wishlistId.includes(item.id)) ? '' : 'fa fa-plus'} />{ (wishlistId.includes(item.id)) ? 'Remove wishlist' : 'Add to wishlist'}</a></li>                        
+                          <li><a><i className="fa fa-plus-square" />Add to compare</a></li>
+                        </ul>
+                      </div>
                     </div>
                   </div>
-                </div>
+                )
+              }
             )
         }
         return (

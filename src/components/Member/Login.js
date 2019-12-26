@@ -93,11 +93,10 @@ class Login extends React.Component {
         return (
             <AppConsumer>
             {({numberCart,addCart}) => (
-                
                 <section className="mtb-2">
                     <div className="container">
                         <div className="row">
-                            <div className="col-sm-12">
+                            <div className="col-sm-offset-4 col-sm-4 col-12">
                             <div className="login-form">
                                 <h2>Login to your account</h2>
                                 <Errors error={this.state.errors} />
