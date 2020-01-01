@@ -11,9 +11,7 @@ import ProductEdit from './ProductEdit';
 import Profile from './Profile';
 import ProductList from './ProductList';
 import Navbar from './Navbar';
-
 // import ImageDirectory from '../Config/ImageDirectory';
-
 class Account extends React.Component {
 
     render() {
@@ -22,7 +20,10 @@ class Account extends React.Component {
             if(!isLoggedIn){
                 return <Redirect to="/login"></Redirect>
             }
+        }else{
+            return <Redirect to="/login"></Redirect>
         }
+        
         return (
             <div>
                 <div className="container">

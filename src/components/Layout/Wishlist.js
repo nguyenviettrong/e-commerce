@@ -1,5 +1,6 @@
 import React from 'react';
 import {AppContext} from '../AppContext'
+import {Link} from 'react-router-dom'
 class Wishlist extends React.Component {
     static contextType = AppContext
 
@@ -19,7 +20,7 @@ class Wishlist extends React.Component {
                                     <p>{item.name}</p>
                                     <div>
                                         <button type="button" className="btn btn-default mr-2" onClick={ () => this.context.handleAddCart(item)}><i className="fa fa-shopping-cart"></i> Add to cart</button>
-                                        <a href="#" className="text-danger" onClick={ () => this.context.toggleWishlist(item)}>Remove wishlist</a>
+                                        <Link to="#" className="text-danger" onClick={ () => this.context.toggleWishlist(item)}>Remove wishlist</Link>
                                     </div>
                                 </div>
                             </div>

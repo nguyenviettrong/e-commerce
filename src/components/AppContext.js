@@ -6,8 +6,8 @@ export const AppConsumer = AppContext.Consumer
 class AppProvider extends React.Component {
     constructor(props){
       super(props)
-      let cart = null
-      let wishlist = null
+      let cart = []
+      let wishlist = []
       if(localStorage["appState"] !== undefined) {
         cart = JSON.parse(localStorage.getItem('appState')).cart
         wishlist = JSON.parse(localStorage.getItem('appState')).wishlist
@@ -19,8 +19,12 @@ class AppProvider extends React.Component {
     }
 
     logoutContext = (value) => {
-        localStorage.clear();
-        this.props.history.push('/login')
+      this.setState({
+        cart: [],
+        wishlist: []
+      })
+      localStorage.clear();
+      this.props.history.push('/login')
     }
 
     handleAddCart = (product) => {

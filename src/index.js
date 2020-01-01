@@ -18,6 +18,7 @@ import Contact from './components/Layout/Contact';
 import Blog from './components/Blog/BlogList';
 import SingleBlog from './components/Blog/BlogSingle';
 import Product from './components/Product/ProductList';
+import ProductSingle from './components/Product/ProductSingle';
 import NotFound from './components/Layout/NotFound';
 
 ReactDOM.render(
@@ -28,6 +29,7 @@ ReactDOM.render(
                     <Route exact path="/" component={Home}/>
                     <Route path="/login" component={Login}/>
                     <Route path="/product" component={Product}/>
+                    <Route path="/productsingle/:slug" component={ProductSingle}/>
                     <Route path="/register" component={Register}/>
                     <Route path="/checkout" component={Checkout}/>
                     <Route path="/account" component={Account}/>

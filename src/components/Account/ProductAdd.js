@@ -160,7 +160,7 @@ class ProductAdd extends React.Component {
                 CallApi('POST','user/add-product', formData, headers)
                 .then(response => {
                     // console.log(response)
-                    if(response.data.response == 'success'){
+                    if(response.data.response === 'success'){
                         Notifications("Add product successfully!","success")
                     }
                 })

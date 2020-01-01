@@ -47,7 +47,7 @@ class ProductEdit extends React.Component {
         // ============================
         CallApi('GET','product/detail/' + this.props.match.params.id, '')
         .then(response => {
-            console.log(response)
+            // console.log(response)
             const dataEdit = response.data.data
             var imageSumary = [];
             for (var i = 0; i < JSON.parse(dataEdit.image).length; ++i){
@@ -67,9 +67,9 @@ class ProductEdit extends React.Component {
                 condition: dataEdit.condition,
                 detail: dataEdit.detail,
                 company: dataEdit.company_profile,
-                highlight: dataEdit.highlight == 0 ? false : true,
+                highlight: dataEdit.highlight === 0 ? false : true,
                 imageSumary: imageSumary,
-                active: dataEdit.active == 0 ? false : true,
+                active: dataEdit.active === 0 ? false : true,
             })
         })
         .catch(error => {
@@ -207,7 +207,7 @@ class ProductEdit extends React.Component {
                 CallApi('POST','user/edit-product/'+ this.props.match.params.id, formData, headers)
                 .then(response => {
                     // console.log(response)
-                    if(response.data.response == 'success'){
+                    if(response.data.response === 'success'){
                         Notifications("Update product successfully!","success")
                     }
                 })

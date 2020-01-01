@@ -63,10 +63,10 @@ class ProductList extends React.Component {
             itemProduct = this.state.dataProducts.map((item,index) => 
                 <tr key={index}>
                     <td className="cart_product">
-                        <a href="true"><img src="images/cart/one.png" alt="" /></a>
+                        <img src="images/cart/one.png" alt="" />
                     </td>
                     <td className="cart_description">
-                        <h4><a href="true">{item.name}</a></h4>
+                        <h4><Link to="#">{item.name}</Link></h4>
                     </td>
                     <td className="cart_price">
                         <p>{item.price}</p>
@@ -75,7 +75,7 @@ class ProductList extends React.Component {
                         <Link to={"/account/edit/" + item.id} id={item.id} onClick={this.handleEdit}>Edit</Link>
                     </td>
                     <td className="cart_delete">
-                        <a id={item.id} className="cart_quantity_delete" href="true" onClick={this.handleDelete}>Delete</a>
+                        <Link to="#" id={item.id} className="cart_quantity_delete" onClick={this.handleDelete}>Delete</Link>
                     </td>
                 </tr>
             )
@@ -93,7 +93,7 @@ class ProductList extends React.Component {
                     </tr>
                     </thead>
                     <tbody>
-                    {itemProduct}
+                        {itemProduct}
                     </tbody>
                 </table>
             </div>

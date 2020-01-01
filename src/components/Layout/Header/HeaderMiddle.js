@@ -19,7 +19,7 @@ class HeaderMiddle extends React.Component {
                     <li><Link to="/checkout"><i className="fa fa-credit-card" /> Checkout </Link></li>                
                     <li><Link to="/account"><i className="fa fa-user" /> Account </Link></li> 
                     <li><Link to="/cart"><i className="fa fa-shopping-cart" /> Cart <span className="badge">{cartNumber}</span></Link></li>                
-                    <li><a onClick={ () => this.context.logoutContext() }><i className="fa fa-sign-out" /> Logout</a></li>
+                    <li><Link to="#" onClick={ () => this.context.logoutContext() }><i className="fa fa-sign-out" /> Logout</Link></li>
                 </React.Fragment>
                 )
             }
@@ -60,8 +60,8 @@ class HeaderMiddle extends React.Component {
                             <span className="caret" />
                             </button>
                             <ul className="dropdown-menu">
-                            <li><a href="true">Canadian Dollar</a></li>
-                            <li><a href="true">Pound</a></li>
+                            <li><Link to="#">Canadian Dollar</Link></li>
+                            <li><Link to="#">Pound</Link></li>
                             </ul>
                         </div>
                         </div>

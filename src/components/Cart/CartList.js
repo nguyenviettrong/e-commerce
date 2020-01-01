@@ -1,6 +1,7 @@
 import React from 'react';
 import ImageDirectory from '../Config/ImageDirectory'
 import { AppContext } from '../AppContext'
+import {Link} from 'react-router-dom'
 
 class CartList extends React.Component {
     static contextType = AppContext
@@ -17,58 +18,59 @@ class CartList extends React.Component {
                         return (           
                             <tr key={index}>
                                 <td className="cart_product">
-                                    <a href="true"><img src={ImageDirectory("user/product/2/" + JSON.parse(item.image) )} alt="" /></a>
+                                    <Link to="#"><img src={ImageDirectory("user/product/2/" + JSON.parse(item.image) )} alt="" /></Link>
                                 </td>
                                 <td className="cart_description">
-                                    <h4><a href="true">{item.name}</a></h4>
+                                    <h4><Link to="#">{item.name}</Link></h4>
                                 </td>
                                 <td className="cart_price">
                                 <p>${item.price}</p>
                                 </td>
                                 <td className="cart_quantity">
                                 <div className="cart_quantity_button">
-                                    <a className="cart_quantity_up" onClick={ () => this.context.handleIncreaseItemCart(item.id) }> + </a>
-                                        <input className="cart_quantity_input" type="text" name="quantity" defaultValue={item.quantity} value={item.quantity}/>
-                                    <a className="cart_quantity_down" onClick={ () => this.context.handleDecreaseItemCart(item.id) }> - </a>
+                                    <Link to="#" className="cart_quantity_up" onClick={ () => this.context.handleIncreaseItemCart(item.id) }> + </Link>
+                                    <input className="cart_quantity_input" type="text" name="quantity" value={item.quantity}/>
+                                    <Link to="#" className="cart_quantity_down" onClick={ () => this.context.handleDecreaseItemCart(item.id) }> - </Link>
                                 </div>
                                 </td>
                                 <td className="cart_total">
                                     <p className="cart_total_price">${item.quantity * item.price}</p>
                                 </td>
                                 <td className="cart_delete">
-                                    <a className="cart_quantity_delete" onClick={ () => this.context.handleRemoveItemCart(item.id) }><i className="fa fa-times" /></a>
+                                    <Link to="#" className="cart_quantity_delete" onClick={ () => this.context.handleRemoveItemCart(item.id) }><i className="fa fa-times" /></Link>
                                 </td>
                             </tr>
                         )
                     }
                 );
 
-                totalCartElement = <tr>
-                    <td colspan="4">&nbsp;</td>
-                    <td colspan="2">
-                        <table class="table table-condensed total-result">
-                            <tr>
-                                <td>Cart Sub Total</td>
-                                <td>${totalCart}</td>
-                            </tr>
-                            <tr>
-                                <td>Exo Tax</td>
-                                <td>$2</td>
-                            </tr>
-                            <tr class="shipping-cost">
-                                <td>Shipping Cost</td>
-                                <td>Free</td>										
-                            </tr>
-                            <tr>
-                                <td>Total</td>
-                                <td><span>$61</span></td>
-                            </tr>
-                        </table>
-                    </td>
-                </tr>
-
+                totalCartElement = <>
+                <td colspan="4">&nbsp;</td>
+                <td colspan="2">
+                    <table className="table table-condensed total-result">
+                        
+                        <tr>
+                            <td>Cart Sub Total</td>
+                            <td>${totalCart}</td>
+                        </tr>
+                        <tr>
+                            <td>Exo Tax</td>
+                            <td>$2</td>
+                        </tr>
+                        <tr className="shipping-cost">
+                            <td>Shipping Cost</td>
+                            <td>Free</td>										
+                        </tr>
+                        <tr>
+                            <td>Total</td>
+                            <td><span>$61</span></td>
+                        </tr>
+                        
+                    </table>
+                </td>
+                </>
             }else{
-                itemCart = <tr><p>Cart is empty!</p></tr>
+                itemCart = <p>Cart is empty!</p>
             }
         }
 
