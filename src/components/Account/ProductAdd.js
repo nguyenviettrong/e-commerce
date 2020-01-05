@@ -70,12 +70,11 @@ class ProductAdd extends React.Component {
         if(Object.keys(files).length > limit_file){
             err.push("Please upload file less than" + limit_file)
         }
-        Object.keys(files).filter((o)=> {
-            if (files[o].size > size) {
-                err.push("File "+files[o].name+" too large, please pick a smaller file")
-            }else if ( !file_type.includes(files[o].type) ){
-                err.push("Please upload jpg or png type file")
-            }
+        Object.keys(files).filter((o) => {
+            if (files[o].size > size)
+            err.push("File "+files[o].name+" too large, please pick a smaller file")
+            if ( !file_type.includes(files[o].type) )
+            err.push("Please upload jpg or png type file")
         });
 
         if(!err.length > 0){
@@ -153,8 +152,8 @@ class ProductAdd extends React.Component {
                 formData.append('company', this.state.company);
                 formData.append('highlight', this.state.highlight ? 1 : 0);
                 formData.append('active', this.state.active ? 1 : 0);
-                this.state.image.map((item,index) => {
-                    formData.append('file[]', item);
+                this.state.image.map((item) => {
+                    return formData.append('file[]', item);
                 })
 
                 CallApi('POST','user/add-product', formData, headers)

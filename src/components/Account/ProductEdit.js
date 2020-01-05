@@ -190,18 +190,12 @@ class ProductEdit extends React.Component {
                 formData.append('highlight', this.state.highlight === true ? 1 : 0);
                 formData.append('active', this.state.active === true ? 1 : 0);
                 this.state.file.map((item,index) => {
-                    formData.append('file[]', item);
+                    return formData.append('file[]', item);
                 })
-                console.log(this.state.imageSumary)
+                // console.log(this.state.imageSumary)
                 this.state.imageSumary.map((item,index) => {
-                    if (item.checked) {
-                        formData.append('avatarCheckBox[]', item.name);
-                    }
-                })
-                this.state.imageSumary.map((item,index) => {
-                    if (item.checked) {
-                        console.log(item.name)
-                    }
+                    if (item.checked) 
+                    return formData.append('avatarCheckBox[]', item.name);
                 })
                 
                 CallApi('POST','user/edit-product/'+ this.props.match.params.id, formData, headers)
